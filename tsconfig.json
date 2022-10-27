@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "module": "esnext",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "types": ["react/next", "react-dom/next"]
+  },
+  "include": [
+    "src"
+  ],
+  "lib": [
+    "es2018",
+    "es2019",
+    "dom"
+  ],
+  "strict": true,
+  "skipLibCheck": true,
+  "noImplicitAny": true,
+  "strictNullChecks": true,
+  "noImplicitOverride": true,
+  "compileOnSave": false,
+}
