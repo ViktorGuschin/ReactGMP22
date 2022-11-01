@@ -1,0 +1,46 @@
+.wrapper {
+    display: flex;
+    width: 265px;
+    align-items: center;
+
+    .label {
+        display: inline-block;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+        color: #fff;
+        opacity: 0.6;
+        margin-right: 30px;
+        width: 80px;
+    }
+
+    .select {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #232323;
+        border: 0;
+        padding-right: 10px;
+        outline: none;
+        appearance: none;
+    }
+}
+
+.wrapper::after {
+    content: '';
+    position: absolute;
+    right: 62px;
+    top: 28px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #f65261;
+    border-radius: 1px;
+    pointer-events: none;
+}
