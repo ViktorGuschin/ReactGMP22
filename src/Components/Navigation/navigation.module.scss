@@ -1,0 +1,33 @@
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 720px;
+    margin: 20px 0 0 0;
+    padding: 0;
+    height: 54px;
+    list-style: none;
+
+    .navItem {
+        min-width: 40px;
+        height: 50px;
+        text-align: center;
+        margin: 0 8px;
+        border-bottom: 4px solid transparent;
+        cursor: pointer;
+
+        div {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    }
+
+    .navItem:hover {
+        border-bottom: 4px solid #f65261;
+        z-index: 5;
+    }
+}

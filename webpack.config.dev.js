@@ -11,6 +11,7 @@ module.exports = {
         filename: '[name].bundle.js',
         chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dev'),
+        assetModuleFilename: 'assets/[name]_[hash][ext][query]',
     },
     resolve: {
         modules: [path.resolve(__dirname, './src'), 'node_modules'],
@@ -48,18 +49,31 @@ module.exports = {
                 loader: 'ts-loader',
             },
             {
-                test: /\.scss$/,
-                use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader', 'sass-loader'],
+                test: /\.(css|scss)$/,
+                use: [
+                    { loader: MiniCssExtractPlugin.loader },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                localIdentName: '[local]--[hash:base64:5]',
+                            },
+                        },
+                    },
+                    { loader: 'sass-loader' },
+                ],
             },
             {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: { name: 'img/[name].[ext]' },
-                    },
-                    'image-webpack-loader',
-                ],
+                test: /\.(png|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.svg/,
+                type: 'asset/inline',
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                type: 'asset/resource',
             },
         ],
     },

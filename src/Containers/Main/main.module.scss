@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    background-color: #232323;
+
+    .navigation {
+        position: relative;
+        margin: auto;
+        width: 1230px;
+    }
+
+    .moviesFound {
+        font-size: 20px;
+        line-height: 24px;
+        color: #fff;
+        margin: 24px 70px;
+
+        .moviesFoundCount {
+            font-weight: 900;
+        }
+    }
+}

@@ -1,0 +1,41 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .poster {
+        width: 322px;
+        height: 455px;
+        background-color: #d8d8d8;
+    }
+
+    .nameWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: #fff;
+        opacity: 0.7;
+        margin-top: 22px;
+
+        .year {
+            opacity: 0.5;
+            border: 1px solid #979797;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 14px;
+            line-height: 17px;
+            text-align: center;
+        }
+    }
+
+    .genre {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #fff;
+        opacity: 0.5;
+        margin-top: 5px;
+    }
+}

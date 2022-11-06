@@ -1,0 +1,12 @@
+@import 'Assets/style.scss';
+
+.wrapper {
+    font-family: $montserrat-font-name;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background: #424242;
+}
