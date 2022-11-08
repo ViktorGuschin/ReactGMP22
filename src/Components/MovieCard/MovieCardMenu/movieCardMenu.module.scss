@@ -1,0 +1,51 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: absolute;
+  width: 190px;
+  height: 111px;
+  background: #232323;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1), 0 2px 10px rgba(0, 0, 0, 0.1), 0 20px rgba(0, 0, 0, 0.1), 0 10px 50px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  top: 14px;
+  left: 120px;
+  padding-top: 30px;
+  padding-bottom: 12px;
+
+  .menuItem {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #fff;
+    opacity: 0.8;
+    padding: 5px 23px;
+    height: 34px;
+
+    &:hover {
+      background-color: #F65261;
+      cursor: pointer;
+    }
+  }
+
+  button[data-role="ModalCloseButton_modalClose"] {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    padding: 0;
+    line-height: 1;
+    background: #232323;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+
+    svg[data-role="ModalCloseButton_modalCloseIcon"] {
+      width: 20px;
+      height: 20px;
+      fill: transparent;
+      stroke: #fff;
+      stroke-linecap: round;
+      stroke-width: 2;
+    }
+  }
+}
