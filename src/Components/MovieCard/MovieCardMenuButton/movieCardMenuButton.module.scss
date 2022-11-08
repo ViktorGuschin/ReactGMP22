@@ -1,0 +1,21 @@
+.menu {
+  position: absolute;
+  display: none;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50px;
+  background-color: #232323;
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    content: '\2807';
+    font-size: 36px;
+    color: #fff;
+    left: 10px;
+    top: -1px;
+  }
+}
