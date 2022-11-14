@@ -6,12 +6,15 @@ import ModalCloseButton from '../ModalCloseButton';
 const DeleteMovieModal: React.FunctionComponent = () => {
     const [showModal, setShowModal] = useState(false);
 
-    const handleShownModal = () => setShowModal(true);
+    const handleShownModal = event => {
+        event.stopPropagation();
+        setShowModal(true);
+    };
     const handleCloseModal = () => setShowModal(false);
 
     return (
         <>
-            <div className={styles.menuItem} onClick={handleShownModal}>
+            <div className={styles.menuItem} onClick={event => handleShownModal(event)}>
                 Delete
             </div>
             {showModal &&
