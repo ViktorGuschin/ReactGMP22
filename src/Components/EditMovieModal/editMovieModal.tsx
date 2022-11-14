@@ -23,13 +23,16 @@ const EditMovieModal: React.FunctionComponent = () => {
         formState: { errors },
     } = useForm<Inputs>();
 
-    const handleShownModal = () => setShowModal(true);
+    const handleShownModal = event => {
+        event.stopPropagation();
+        setShowModal(true);
+    };
     const handleCloseModal = () => setShowModal(false);
     const submitForm = () => {};
 
     return (
         <>
-            <div className={styles.menuItem} onClick={handleShownModal}>
+            <div className={styles.menuItem} onClick={event => handleShownModal(event)}>
                 Edit
             </div>
             {showModal &&

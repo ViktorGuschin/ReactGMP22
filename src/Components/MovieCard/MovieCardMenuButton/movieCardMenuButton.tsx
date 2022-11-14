@@ -8,9 +8,14 @@ const MovieCardMenuButton: React.FunctionComponent<{
     closeClick: () => void;
     showMovieCardMenu: boolean;
 }> = ({ openClick, closeClick, showMovieCardMenu }) => {
+    const handleOpenClick = event => {
+        event.stopPropagation();
+        openClick();
+    };
+
     return (
         <>
-            <div className={styles.menu} data-role="movieCardMenuButton" onClick={openClick} />
+            <div className={styles.menu} data-role="movieCardMenuButton" onClick={event => handleOpenClick(event)} />
             {showMovieCardMenu && <MovieCardMenu onCloseClick={() => closeClick()} />}
         </>
     );

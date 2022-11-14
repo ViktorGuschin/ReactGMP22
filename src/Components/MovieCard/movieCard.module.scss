@@ -2,18 +2,17 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 
     .poster {
         position: relative;
         width: 322px;
         height: 455px;
         background-color: #d8d8d8;
+    }
 
-        &:hover {
-            div[data-role="movieCardMenuButton"] {
-                display: block;
-            }
-        }
+    .poster:hover ~ div[data-role="movieCardMenuButton"]{
+        display: block;
     }
 
     .nameWrapper {
