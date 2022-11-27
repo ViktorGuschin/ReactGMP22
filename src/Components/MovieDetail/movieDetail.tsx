@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 
-import { MovieCardArgs } from '../MovieCard';
 import Brand from '../Brand';
 import SearchButton from '../SearchButton';
 
@@ -8,6 +7,7 @@ import styles from './movieDetail.module.scss';
 import { AppContext } from '../../Contexts/appContext';
 import getReleaseYear from '../../Utils/getReleaseYear';
 import getMovieLength from '../../Utils/getMovieLength';
+import { MovieCardArgs } from '../../Models';
 
 type MovieDetailType = {
     activeMovie: MovieCardArgs;

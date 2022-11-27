@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import useToggle from '../Hooks/useToggle';
-import { MovieCardArgs } from '../Components/MovieCard';
+import { MovieCardArgs } from '../Models';
 
 export type AppContextType = {
     activeMovie: MovieCardArgs | null;
