@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 
-import { SubmitHandler } from 'react-hook-form';
 import Brand from '../../Components/Brand';
 import AddMovieButton from '../../Components/AddMovieButton';
 import Search from '../../Components/Search/search';
-import AddMovieModal, { Inputs } from '../../Components/AddMovieModal/addMovieModal';
+import AddMovieModal from '../../Components/AddMovieModal/addMovieModal';
 import styles from './header.module.scss';
 import { AppContext } from '../../Contexts/appContext';
 import MovieDetail from '../../Components/MovieDetail';
@@ -12,10 +11,6 @@ import MovieDetail from '../../Components/MovieDetail';
 const Header: React.FunctionComponent = () => {
     const { showAddMovieModal, setShowAddMovieModal, showHeaderSearch, showMovieDetail, activeMovie } =
         useContext(AppContext);
-
-    const submitForm: SubmitHandler<Inputs> = (_data, e) => {
-        e.target.reset();
-    };
 
     return (
         <>
@@ -28,7 +23,7 @@ const Header: React.FunctionComponent = () => {
                     <div className={styles.wrapperSearch}>
                         <Search />
                     </div>
-                    {showAddMovieModal && <AddMovieModal toggleModal={setShowAddMovieModal} submitForm={submitForm} />}
+                    {showAddMovieModal && <AddMovieModal toggleModal={setShowAddMovieModal} />}
                 </div>
             )}
             {showMovieDetail && <MovieDetail activeMovie={activeMovie} />}

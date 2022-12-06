@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import styles from './addMovieModal.module.scss';
 import { AddMovieButtonProps } from '../AddMovieButton/addMovieButton';
 import ModalCloseButton from '../ModalCloseButton';
+import useAppDispatch from '../../Hooks/useAppDispatch';
+import { addMovie } from './addMovieModalSlice';
+import { AddMovieCardArgs } from '../../Models';
+import { loadMovies } from '../../Containers/MovieList/movieListSlice';
 
 export type Inputs = {
     genre: string;
@@ -12,25 +16,36 @@ export type Inputs = {
     overview: string;
     rating: string;
     releaseDate: string;
-    runtime: string;
+    runtime: number;
     title: string;
 };
 
-type AddMovieModalProps = AddMovieButtonProps & {
-    submitForm: SubmitHandler<Inputs>;
-};
+type AddMovieModalProps = AddMovieButtonProps;
 
-const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModal, submitForm }) => {
+const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModal }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<Inputs>();
     const [complete, setComplete] = useState(false);
+    const dispatch = useAppDispatch();
 
-    const customHandleSubmit = () => {
-        handleSubmit(submitForm);
+    const customHandleSubmit = async (data: Inputs) => {
+        const movie: AddMovieCardArgs = {
+            title: data.title,
+            release_date: data.releaseDate,
+            poster_path: data.movieUrl,
+            vote_average: Number(data.rating),
+            genres: [data.genre],
+            runtime: Number(data.runtime),
+            overview: data.overview,
+        };
+        await dispatch(addMovie(movie));
         setComplete(true);
+        reset();
+        dispatch(loadMovies());
     };
 
     const handleComplete = () => {
@@ -45,8 +60,7 @@ const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModa
                 <div className={styles.wrapperContext}>
                     <ModalCloseButton onClick={() => toggleModal(false)} />
                     <h2 className={styles.header}>add movie</h2>
-                    <form onSubmit={customHandleSubmit}>
-                        {/* register your input into the hook by invoking the "register" function */}
+                    <form onSubmit={handleSubmit(data => customHandleSubmit(data))}>
                         <div className={styles.formRow}>
                             <div className={styles.formItem}>
                                 <label htmlFor="title">title</label>
@@ -57,7 +71,9 @@ const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModa
                                     defaultValue=""
                                     {...register('title', { required: true })}
                                 />
-                                {errors.title && <span className={styles.errorMessage}>This field is required</span>}
+                                {errors.title && (
+                                    <span className={styles.errorMessage}>Title is not allowed to be empty</span>
+                                )}
                             </div>
                             <div className={styles.formItem}>
                                 <label htmlFor="releaseDate">release date</label>
@@ -67,8 +83,11 @@ const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModa
                                     id="releaseDate"
                                     className={`${styles.inputRight} ${styles.releaseDate}`}
                                     defaultValue=""
-                                    {...register('releaseDate')}
+                                    {...register('releaseDate', { required: true })}
                                 />
+                                {errors.genre && (
+                                    <span className={styles.errorMessage}>Release Date is not allowed to be empty</span>
+                                )}
                             </div>
                         </div>
                         <div className={styles.formRow}>
@@ -78,8 +97,11 @@ const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModa
                                     id="movieUrl"
                                     className={styles.inputLeft}
                                     defaultValue=""
-                                    {...register('movieUrl')}
+                                    {...register('movieUrl', { pattern: /^(http|https):\/\/[^ "]+$/, required: true })}
                                 />
+                                {errors.movieUrl && (
+                                    <span className={styles.errorMessage}>Movie Url must be a valid uri</span>
+                                )}
                             </div>
                             <div className={styles.formItem}>
                                 <label htmlFor="rating">rating</label>
@@ -110,8 +132,11 @@ const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModa
                                     id="runtime"
                                     className={styles.inputRight}
                                     defaultValue=""
-                                    {...register('runtime')}
+                                    {...register('runtime', { required: true, min: 0 })}
                                 />
+                                {errors.runtime && (
+                                    <span className={styles.errorMessage}>Runtime must be a greater than zero</span>
+                                )}
                             </div>
                         </div>
                         <div className={styles.formRow}>
@@ -121,8 +146,11 @@ const AddMovieModal: React.FunctionComponent<AddMovieModalProps> = ({ toggleModa
                                     id="overview"
                                     className={styles.inputOverview}
                                     defaultValue=""
-                                    {...register('overview')}
+                                    {...register('overview', { required: true })}
                                 />
+                                {errors.overview && (
+                                    <span className={styles.errorMessage}>Overview is not allowed to be empty</span>
+                                )}
                             </div>
                         </div>
                         <div className={styles.formButtons}>

@@ -4,8 +4,14 @@ import { useForm } from 'react-hook-form';
 
 import styles from './editMovieModal.module.scss';
 import ModalCloseButton from '../ModalCloseButton';
+import useAppDispatch from '../../Hooks/useAppDispatch';
+import { MovieCardArgs } from '../../Models';
+import { loadMovies } from '../../Containers/MovieList/movieListSlice';
+import { editMovie } from './editMovieModalSlice';
+import useAppSelector from '../../Hooks/useAppSelector';
 
 export type Inputs = {
+    id: number;
     genre: string;
     movieUrl: string;
     overview: string;
@@ -21,14 +27,31 @@ const EditMovieModal: React.FunctionComponent = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<Inputs>();
+    const movie = useAppSelector(state => state.movieCard.entity);
+    const dispatch = useAppDispatch();
 
     const handleShownModal = event => {
         event.stopPropagation();
         setShowModal(true);
     };
     const handleCloseModal = () => setShowModal(false);
-    const submitForm = () => {};
+    const submitEditMovieForm = async (formData: Inputs) => {
+        const data: MovieCardArgs = {
+            id: movie.id,
+            title: formData.title,
+            release_date: formData.releaseDate,
+            poster_path: formData.movieUrl,
+            vote_average: Number(formData.rating),
+            genres: [formData.genre],
+            runtime: Number(formData.runtime),
+            overview: formData.overview,
+        };
+        await dispatch(editMovie(data));
+        reset();
+        dispatch(loadMovies());
+    };
 
     return (
         <>
@@ -42,7 +65,7 @@ const EditMovieModal: React.FunctionComponent = () => {
                         <div className={styles.wrapperContext}>
                             <ModalCloseButton onClick={handleCloseModal} />
                             <h2 className={styles.header}>edit movie</h2>
-                            <form onSubmit={handleSubmit(submitForm)}>
+                            <form onSubmit={handleSubmit(data => submitEditMovieForm(data))}>
                                 {/* register your input into the hook by invoking the "register" function */}
                                 <div className={styles.formRow}>
                                     <div className={styles.formItem}>
@@ -51,11 +74,13 @@ const EditMovieModal: React.FunctionComponent = () => {
                                             id="title"
                                             className={styles.inputLeft}
                                             type=""
-                                            defaultValue=""
+                                            defaultValue={movie.title}
                                             {...register('title', { required: true })}
                                         />
                                         {errors.title && (
-                                            <span className={styles.errorMessage}>This field is required</span>
+                                            <span className={styles.errorMessage}>
+                                                Title is not allowed to be empty
+                                            </span>
                                         )}
                                     </div>
                                     <div className={styles.formItem}>
@@ -63,9 +88,14 @@ const EditMovieModal: React.FunctionComponent = () => {
                                         <input
                                             id="releaseDate"
                                             className={styles.inputRight}
-                                            defaultValue=""
-                                            {...register('releaseDate')}
+                                            defaultValue={movie.release_date}
+                                            {...register('releaseDate', { required: true })}
                                         />
+                                        {errors.genre && (
+                                            <span className={styles.errorMessage}>
+                                                Release Date is not allowed to be empty
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles.formRow}>
@@ -74,7 +104,7 @@ const EditMovieModal: React.FunctionComponent = () => {
                                         <input
                                             id="movieUrl"
                                             className={styles.inputLeft}
-                                            defaultValue=""
+                                            defaultValue={movie.poster_path}
                                             {...register('movieUrl')}
                                         />
                                     </div>
@@ -83,9 +113,15 @@ const EditMovieModal: React.FunctionComponent = () => {
                                         <input
                                             id="rating"
                                             className={styles.inputRight}
-                                            defaultValue=""
-                                            {...register('rating')}
+                                            defaultValue={movie.vote_average}
+                                            {...register('movieUrl', {
+                                                pattern: /^(http|https):\/\/[^ "]+$/,
+                                                required: true,
+                                            })}
                                         />
+                                        {errors.movieUrl && (
+                                            <span className={styles.errorMessage}>Movie Url must be a valid uri</span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles.formRow}>
@@ -94,7 +130,7 @@ const EditMovieModal: React.FunctionComponent = () => {
                                         <input
                                             id="genre"
                                             className={styles.inputLeft}
-                                            defaultValue=""
+                                            defaultValue={movie.genres}
                                             {...register('genre', { required: true })}
                                         />
                                         {errors.genre && (
@@ -108,9 +144,14 @@ const EditMovieModal: React.FunctionComponent = () => {
                                         <input
                                             id="runtime"
                                             className={styles.inputRight}
-                                            defaultValue=""
-                                            {...register('runtime')}
+                                            defaultValue={movie.runtime}
+                                            {...register('runtime', { required: true, min: 0 })}
                                         />
+                                        {errors.runtime && (
+                                            <span className={styles.errorMessage}>
+                                                Runtime must be a greater than zero
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles.formRow}>
@@ -119,9 +160,14 @@ const EditMovieModal: React.FunctionComponent = () => {
                                         <textarea
                                             id="overview"
                                             className={styles.inputOverview}
-                                            defaultValue=""
-                                            {...register('overview')}
+                                            defaultValue={movie.overview}
+                                            {...register('overview', { required: true })}
                                         />
+                                        {errors.overview && (
+                                            <span className={styles.errorMessage}>
+                                                Overview is not allowed to be empty
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles.formButtons}>
