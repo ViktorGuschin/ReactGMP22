@@ -5,6 +5,8 @@ import MovieCardMenuButton from './MovieCardMenuButton';
 import { AppContext } from '../../Contexts/appContext';
 import getReleaseYear from '../../Utils/getReleaseYear';
 import { MovieCardArgs } from '../../Models';
+import useAppDispatch from '../../Hooks/useAppDispatch';
+import { setActiveMovie as setActiveMovieRedux } from './movieCardSlice';
 
 const MovieCard: React.FunctionComponent<MovieCardArgs> = ({
     id,
@@ -18,23 +20,26 @@ const MovieCard: React.FunctionComponent<MovieCardArgs> = ({
 }) => {
     const [showMovieCardMenu, setShowMovieCardMenu] = useState(false);
     const { setShowMovieDetail, setShowHeaderSearch, setActiveMovie } = useContext(AppContext);
+    const dispatch = useAppDispatch();
+
+    const activeMovie: MovieCardArgs = {
+        id,
+        poster_path,
+        title,
+        release_date,
+        genres,
+        vote_average,
+        runtime,
+        overview,
+    };
 
     const handleOpenMovieCardMenu = () => {
         setShowMovieCardMenu(true);
+        dispatch(setActiveMovieRedux(activeMovie));
     };
     const handleCloseMovieCardMenu = () => setShowMovieCardMenu(false);
 
     const handleShowMovieDetail = () => {
-        const activeMovie: MovieCardArgs = {
-            id,
-            poster_path,
-            title,
-            release_date,
-            genres,
-            vote_average,
-            runtime,
-            overview,
-        };
         setActiveMovie(activeMovie);
         setShowMovieDetail(true);
         setShowHeaderSearch(false);

@@ -44,5 +44,13 @@ client.get = function (endpoint, customConfig = defaultConfig) {
 };
 
 client.post = function (endpoint, body, customConfig = defaultConfig) {
-    return client(endpoint, { ...customConfig, body });
+    return client(`${API_URL}${endpoint}`, { ...customConfig, body });
+};
+
+client.put = function (endpoint, body, customConfig = defaultConfig) {
+    return client(`${API_URL}${endpoint}`, { ...customConfig, body, method: 'PUT' });
+};
+
+client.delete = function (endpoint, customConfig = defaultConfig) {
+    return client(`${API_URL}${endpoint}`, { ...customConfig, method: 'DELETE' });
 };

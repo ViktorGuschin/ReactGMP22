@@ -1,5 +1,4 @@
-export type MovieCardArgs = {
-    id: number;
+export type AddMovieCardArgs = {
     title?: string;
     tagline?: string;
     vote_average?: number;
@@ -11,4 +10,8 @@ export type MovieCardArgs = {
     revenue?: number;
     runtime?: number;
     genres?: string[];
+};
+
+export type MovieCardArgs = AddMovieCardArgs & {
+    id: number;
 };
