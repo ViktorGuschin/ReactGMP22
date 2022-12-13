@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import styles from './movieCard.module.scss';
 import MovieCardMenuButton from './MovieCardMenuButton';
@@ -20,6 +21,7 @@ const MovieCard: React.FunctionComponent<MovieCardArgs> = ({
 }) => {
     const [showMovieCardMenu, setShowMovieCardMenu] = useState(false);
     const { setShowMovieDetail, setShowHeaderSearch, setActiveMovie } = useContext(AppContext);
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useAppDispatch();
 
     const activeMovie: MovieCardArgs = {
@@ -35,7 +37,6 @@ const MovieCard: React.FunctionComponent<MovieCardArgs> = ({
 
     const handleOpenMovieCardMenu = () => {
         setShowMovieCardMenu(true);
-        dispatch(setActiveMovieRedux(activeMovie));
     };
     const handleCloseMovieCardMenu = () => setShowMovieCardMenu(false);
 
@@ -43,6 +44,10 @@ const MovieCard: React.FunctionComponent<MovieCardArgs> = ({
         setActiveMovie(activeMovie);
         setShowMovieDetail(true);
         setShowHeaderSearch(false);
+        dispatch(setActiveMovieRedux(activeMovie));
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.set('movie', String(activeMovie.id));
+        setSearchParams(newSearchParams);
     };
 
     return (

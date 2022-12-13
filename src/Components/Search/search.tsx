@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import styles from './search.module.scss';
 import useAppDispatch from '../../Hooks/useAppDispatch';
@@ -6,15 +7,16 @@ import { searchMoviesByTitle } from '../../Containers/MovieList/movieListSlice';
 
 const Search: React.FunctionComponent = () => {
     const [searchText, setSearchText] = useState('');
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const dispatch = useAppDispatch();
 
     const handleOnChange = e => setSearchText(e.target.value);
+    const handleSearch = () => {
+        dispatch(searchMoviesByTitle(searchText));
+        navigate(`/search/${searchText}?${searchParams}`);
+    };
 
-    useEffect(() => {
-        if (searchText?.length > 2) {
-            dispatch(searchMoviesByTitle(searchText));
-        }
-    }, [searchText, dispatch]);
     return (
         <>
             <h2 className={styles.searchText}>find your movie</h2>
@@ -26,7 +28,7 @@ const Search: React.FunctionComponent = () => {
                     onChange={handleOnChange}
                     placeholder="What do you want to watch?"
                 />
-                <button className={styles.searchButton} type="button">
+                <button className={styles.searchButton} type="button" onClick={handleSearch}>
                     search
                 </button>
             </div>

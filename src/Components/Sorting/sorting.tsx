@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import styles from './sorting.module.scss';
 import useAppDispatch from '../../Hooks/useAppDispatch';
 import { sortMovies } from '../../Containers/MovieList/movieListSlice';
 
 const Sorting: React.FunctionComponent = () => {
-    const [sortBy, setSortBy] = useState('all');
+    const [sortBy, setSortBy] = useState('genre');
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useAppDispatch();
 
     const handleOnChange = e => setSortBy(e.target.value);
 
     useEffect(() => {
         dispatch(sortMovies(sortBy));
-    }, [sortBy, dispatch]);
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.set('sortBy', sortBy);
+        setSearchParams(newSearchParams);
+    }, [sortBy, dispatch, searchParams, setSearchParams]);
 
     return (
         <div className={styles.wrapper}>

@@ -30,4 +30,9 @@
         border-bottom: 4px solid #f65261;
         z-index: 5;
     }
+
+    .navItem.active {
+        border-bottom: 4px solid #f65261;
+        z-index: 5;
+    }
 }
