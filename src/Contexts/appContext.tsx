@@ -15,7 +15,9 @@ export type AppContextType = {
 
 export const AppContext = React.createContext<AppContextType | null>(null);
 
-const AppProvider: React.FC<React.ReactNode> = ({ children }) => {
+const AppProvider: React.FC<{
+    children: React.ReactNode;
+}> = ({ children }) => {
     const [showAddMovieModal, setShowAddMovieModal] = useToggle(false);
     const [showHeaderSearch, setShowHeaderSearch] = useState(true);
     const [showMovieDetail, setShowMovieDetail] = useState(false);
