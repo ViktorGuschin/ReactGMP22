@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search Component should match snapshot 1`] = `
+<DocumentFragment>
+  <h2
+    class="searchText"
+  >
+    find your movie
+  </h2>
+  <div
+    class="searchInputWrapper"
+  >
+    <input
+      class="searchInput"
+      placeholder="What do you want to watch?"
+      type="search"
+      value=""
+    />
+    <button
+      class="searchButton"
+      type="button"
+    >
+      search
+    </button>
+  </div>
+</DocumentFragment>
+`;
