@@ -6,8 +6,10 @@ import useAppDispatch from '../../Hooks/useAppDispatch';
 import { searchMoviesByTitle } from '../../Containers/MovieList/movieListSlice';
 
 const Search: React.FunctionComponent = () => {
+    // @ts-ignore
     const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
+    // @ts-ignore
     const [searchParams] = useSearchParams();
     const dispatch = useAppDispatch();
 

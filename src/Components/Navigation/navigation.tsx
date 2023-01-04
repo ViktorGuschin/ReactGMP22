@@ -34,7 +34,7 @@ const Navigation: React.FunctionComponent = () => {
                     return (
                         <li
                             key={item}
-                            className={`${styles.navItem}${filter === item ? ' ' + styles.active : ''}`}
+                            className={`${styles.navItem}${filter === item ? ` ${styles.active}` : ''}`}
                             value={item}
                             onClick={() => handleOnFilter(item)}>
                             <div>{item}</div>
