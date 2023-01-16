@@ -57,3 +57,32 @@ $montserrat-font-name: 'Montserrat';
     font-style: italic;
     font-display: swap;
 }
+
+html,
+body {
+    min-height: 100vh;
+    position: relative;
+}
+
+@mixin close-modal--big {
+    button[data-role="ModalCloseButton_modalClose"] {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        padding: 0.5em;
+        line-height: 1;
+        background: #232323;
+        color: #fff;
+        border: 0;
+        cursor: pointer;
+
+        svg[data-role="ModalCloseButton_modalCloseIcon"] {
+            width: 30px;
+            height: 30px;
+            fill: transparent;
+            stroke: #fff;
+            stroke-linecap: round;
+            stroke-width: 2;
+        }
+    }
+}

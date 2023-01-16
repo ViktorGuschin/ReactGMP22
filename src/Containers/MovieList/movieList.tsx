@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import MovieCard, { MovieCardArgs } from '../../Components/MovieCard';
 import styles from './movieList.module.scss';
@@ -43,6 +43,11 @@ const mockData: MovieCardArgs[] = [
 ];
 
 const MovieList: React.FunctionComponent = () => {
+    // @ts-ignore
+    useEffect(() => {
+        console.log(mockData);
+    });
+
     return (
         <div className={styles.wrapper}>
             {mockData.map(film => {
